@@ -1,6 +1,8 @@
+
 import express from "express";
 import cors from "cors";
 import webhookRoutes from "./routes/webhook.js";
+import { supabase } from "./config/db.js";
 
 export function createApp(io) {
   const app = express();
@@ -10,6 +12,25 @@ export function createApp(io) {
 
   app.get("/health", (req, res) => {
     res.json({ status: "ok" });
+  });
+
+  // Fetch existing leads from Supabase
+  app.get("/api/leads", async (req, res) => {
+    try {
+      const { data, error } = await supabase
+        .from("leads")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+
+      return res.status(200).json(data);
+    } catch (error) {
+      console.error("Failed to fetch leads:", error.message);
+      return res.status(500).json({
+        error: "Failed to fetch leads",
+      });
+    }
   });
 
   app.use("/webhook", webhookRoutes(io));
