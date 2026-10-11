@@ -1,7 +1,8 @@
 export async function getMetaLead(leadId) {
   const version = process.env.META_API_VERSION;
   const token = process.env.META_ACCESS_TOKEN;
-
+console.log("Token loaded:", Boolean(process.env.META_ACCESS_TOKEN));
+console.log("Token length:", process.env.META_ACCESS_TOKEN?.length);
   const url = new URL(
     `https://graph.facebook.com/${version}/${leadId}`
   );
