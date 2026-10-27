@@ -1,4 +1,4 @@
-
+import LeadModel from "../model.js";
 import express from "express";
 import cors from "cors";
 import webhookRoutes from "./routes/webhook.js";
@@ -17,6 +17,7 @@ export function createApp(io) {
   // Fetch existing leads from Supabase
   app.get("/api/leads", async (req, res) => {
     try {
+        const mongooseLeads=await LeadModel.find()
       const { data, error } = await supabase
         .from("leads")
         .select("*")

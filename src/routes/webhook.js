@@ -9,6 +9,5 @@ export default function webhookRoutes(io) {
 
   router.get("/", verifyWebhook);
   router.post("/", createWebhookHandler(io));
-
   return router;
 }
