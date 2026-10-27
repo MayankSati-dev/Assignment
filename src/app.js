@@ -34,7 +34,8 @@ export function createApp(io) {
     }
   });
 app.post("/api/togglebtn",async(req,res)=>{
-  await LeadModel.updateMany({}, { $set: { status:false } });
+  let change=await LeadModel.updateMany({}, { $set: { status:false } });
+  console.log(change)
   res.status(200).json({
     message:"toggle change"
   })
