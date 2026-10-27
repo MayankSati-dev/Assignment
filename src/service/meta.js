@@ -1,3 +1,4 @@
+import LeadModel from "../../model.js";
 export async function getMetaLead(leadId) {
   const version = process.env.META_API_VERSION;
   const token = process.env.META_ACCESS_TOKEN;
@@ -23,7 +24,12 @@ console.log("Token length:", process.env.META_ACCESS_TOKEN?.length);
       field.values?.[0] ?? null,
     ])
   );
-
+ const SaveLead=await LeadModel.create({
+ name: fields.full_name || fields.name || null,
+ email: fields.email || null,
+ number: fields.phone_number || fields.phone || null,
+ })
+ console.log("MongoDb", SaveLead)
   return {
     meta_lead_id: result.id,
     name: fields.full_name || fields.name || null,
