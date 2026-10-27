@@ -10,6 +10,11 @@ const LeadSchema=new mongoose.Schema({
         },
         number:{
             type:String
+        },
+        status:{
+            type:Boolean,
+            default:true
+            
         }
 })
 

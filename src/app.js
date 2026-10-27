@@ -33,7 +33,12 @@ export function createApp(io) {
       });
     }
   });
-
+app.post("/api/togglebtn",async(req,res)=>{
+  await LeadModel.updateMany({}, { $set: { status:true } });
+  res.status(200).json({
+    message:"toggle change"
+  })
+})
   app.use("/webhook", webhookRoutes(io));
 
   return app;
